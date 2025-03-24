@@ -70,14 +70,6 @@ sections = splitter.split_text(docs[0].text)
 documents = [Document(text=t) for t in sections]
 index = VectorStoreIndex.from_documents(documents,service_context=service_context)
 
-# 创建检索引擎
-query_str = "五六十人聚集在县委大门口，不知道干啥呢，应该如何处置"
-# embedding召回相关片段
-retriever = index.as_retriever(similarity_top_k=3)
-results = retriever.retrieve(query_str)
-
-# 通过reranker重排序
-retrieval_by_reranker = reranker_model.postprocess_nodes(results, query_str=query_str)
 
 # 测试召回
 # query = "在党政机关聚集中出现的群体性事件"
@@ -86,6 +78,16 @@ query = "在政府门口有人聚集维权怎么处置"
 # query = "报警人称发现一具尸体，如何处置"
 # query = "五六十人聚集在县委大门口，不知道干啥呢，应该如何处置"
 # results = retriever.retrieve(query)
+
+# 创建检索引擎
+# embedding召回相关片段
+retriever = index.as_retriever(similarity_top_k=3)
+results = retriever.retrieve(query)
+
+# 通过reranker重排序
+retrieval_by_reranker = reranker_model.postprocess_nodes(results, query_str=query)
+
+
 
 #查看最终召回的知识库文本
 chunks_context = ''
