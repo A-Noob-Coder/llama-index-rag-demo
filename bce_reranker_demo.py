@@ -70,7 +70,6 @@ sections = splitter.split_text(docs[0].text)
 documents = [Document(text=t) for t in sections]
 index = VectorStoreIndex.from_documents(documents,service_context=service_context)
 
-
 # 测试召回
 # query = "在党政机关聚集中出现的群体性事件"
 # query = "在政府机关聚集，怎么处理"
